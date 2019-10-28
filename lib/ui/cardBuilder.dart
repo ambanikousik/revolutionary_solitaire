@@ -17,8 +17,6 @@ class CardBuilder extends StatefulWidget {
 }
 
 class _cardBuilder extends State<CardBuilder>{
-
-  var _card ;
   int position ;
   @override
   void initState() {
@@ -26,41 +24,15 @@ class _cardBuilder extends State<CardBuilder>{
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    if(!widget.playingCard.selected){
-      _card =  Container(
-        width: 100,
-        height:  139.4,
-        child:Image.asset("assets/"+_cardSuitToString()+"_"+ widget.playingCard.cardNumber.toString() + ".png",),
-      );
-    }
-    else{
-      _card = Stack(
-          children: <Widget>[
-            Container(width: 102,
-                height:  141,
-                child: Image.asset("assets/"+ _cardSuitToString() +"_"+ widget.playingCard.cardNumber.toString() + ".png",)),
-    ClipRRect(
-    borderRadius: BorderRadius.all(
-     Radius.circular(8.0),
-    ),child: Container(
-      width: 102,
-      height:  141,
-      color: Colors.redAccent.withOpacity(0.6),)
-            ),
-          ],
-      );
-    }
-
-
-
     // TODO: implement build
     return InkWell(
       onTap: (){
         _gameHandle();
       },
-      child: _card,
+      child: _card(widget.playingCard.selected),
     );
   }
 
@@ -142,6 +114,55 @@ class _cardBuilder extends State<CardBuilder>{
       }
     }
     return true;
+  }
+
+
+  Widget _card(bool selected){
+    if(selected){
+      return Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Container(
+            width: 103,
+            height:  143,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.lightBlue,
+                width: 1,
+              ),
+              //color: Colors.redAccent.withOpacity(0.6),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Colors.blue,
+                  blurRadius: 10.0,
+                  //offset: new Offset(2.0, 2.0,),
+                ),
+              ],
+            ),
+          ),
+
+          Container(
+              width: 100,
+              height:  140,
+              child: Image.asset("assets/"+ _cardSuitToString() +"_"+ widget.playingCard.cardNumber.toString() + ".png",)),
+
+          ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
+              ),child: Container(
+            width: 100,
+            height:  140,
+            color: Colors.lightBlueAccent.withOpacity(0.2),)
+          ),
+        ],
+      );
+    }
+    return Container(
+      width: 100,
+      height:  140,
+      child:Image.asset("assets/"+_cardSuitToString()+"_"+ widget.playingCard.cardNumber.toString() + ".png",),
+    );
   }
 }
 

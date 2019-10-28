@@ -12,9 +12,7 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardState extends State<GameBoard> {
-
   List _deck = [];
-
 @override
   void initState() {
     // TODO: implement initState
@@ -24,49 +22,60 @@ class _GameBoardState extends State<GameBoard> {
   }
 
 
-
-
   void onValueChanged(List newList) {
   setState(() {
     _deck = newList;
   });
 }
 
+  Widget _cardSet(){
+  return Container(
+    width: 480,
+    height: 330,
+    decoration: BoxDecoration(
+      color: Colors.black26,
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              CardCell(card: _deck[0],onValueChanged: onValueChanged,),
+              CardCell(card: _deck[1],onValueChanged: onValueChanged),
+              CardCell(card: _deck[2],onValueChanged: onValueChanged),
+              CardCell(card: _deck[3],onValueChanged: onValueChanged),
+            ]
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            CardCell(card: _deck[4],onValueChanged: onValueChanged),
+            CardCell(card: _deck[5],onValueChanged: onValueChanged),
+            CardCell(card: _deck[6],onValueChanged: onValueChanged),
+            CardCell(card: _deck[7],onValueChanged: onValueChanged),
+
+          ],
+        ),
+      ],
+      // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+  );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Color(0xFF333366),
       body:Container(
-             width: 450,
-              height: 300,
-        margin: new EdgeInsets.only(top:40.0,left: 40),
-        //color: Colors.amberAccent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        alignment: Alignment.center,
+            child: Row(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    CardCell(card: _deck[0],onValueChanged: onValueChanged,),
-                    CardCell(card: _deck[1],onValueChanged: onValueChanged),
-                    CardCell(card: _deck[2],onValueChanged: onValueChanged),
-                    CardCell(card: _deck[3],onValueChanged: onValueChanged),
-                  ]
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    CardCell(card: _deck[4],onValueChanged: onValueChanged),
-                    CardCell(card: _deck[5],onValueChanged: onValueChanged),
-                    CardCell(card: _deck[6],onValueChanged: onValueChanged),
-                    CardCell(card: _deck[7],onValueChanged: onValueChanged),
-
-                  ],
-                ),
+                _cardSet(),
               ],
-
-    ), // This trailing comma makes auto-formatting nicer for build methods.
-    )
+            ), // This trailing comma makes auto-formatting nicer for build methods.
+    ),
     );
   }
 
