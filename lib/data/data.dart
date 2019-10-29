@@ -69,8 +69,8 @@ List<PlayingCard> r7 = [
   PlayingCard(cardSuit:CardSuit.Spades,cardNumber: 6),
 ];List<PlayingCard> r9 = [
   PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 8),
-  PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 12),
-  PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 13),
+  PlayingCard(cardSuit:CardSuit.Spades,cardNumber: 12),
+  PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 13),
   PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber: 14),
 ];List<PlayingCard> r10 = [
   PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 11),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:revolutionary_solitaire/model/playing_card.dart';
 import 'package:revolutionary_solitaire/data/data.dart';
 import 'card_cell.dart';
+import 'ShadowText.dart';
+
 
 class GameBoard extends StatefulWidget {
   GameBoard({Key key, this.title}) : super(key: key);
@@ -13,10 +15,13 @@ class GameBoard extends StatefulWidget {
 
 class _GameBoardState extends State<GameBoard> {
   List _deck = [];
+  int reserved,score;
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    reserved = 44;
+    score=0;
     _initialiseGame();
     _deck = deck;
   }
@@ -24,6 +29,8 @@ class _GameBoardState extends State<GameBoard> {
 
   void onValueChanged(List newList) {
   setState(() {
+    score=score+4;
+    reserved = reserved-4;
     _deck = newList;
   });
 }
@@ -72,7 +79,54 @@ class _GameBoardState extends State<GameBoard> {
         alignment: Alignment.center,
             child: Row(
               children: <Widget>[
+                SizedBox(width: 20,),
                 _cardSet(),
+                SizedBox(width: 20,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ShadowText('27 Red & Black',
+                      style:TextStyle(fontSize:30,color: Colors.redAccent,fontStyle:FontStyle.italic),
+                    ),
+                    SizedBox(height:20,),
+                    Container(
+                      height: 80,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        border: Border.all(
+                          color: Colors.lightBlueAccent,
+                          width: 2,
+                        ),
+                      ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text("Reserved Cards",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                fontSize: 25,
+                                 ),),
+                            Text(reserved.toString(),
+                              style: TextStyle(
+                                color: Colors.lightGreen,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700
+                              ),),
+                          ],
+                        )
+                    ),
+                    SizedBox(height:100,),
+                    RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(text: 'Collected \nCards: ', style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.w300, fontSize:25),),
+                          TextSpan(text: score.toString(), style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.w500, fontSize:25),),
+                        ]
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ), // This trailing comma makes auto-formatting nicer for build methods.
     ),
