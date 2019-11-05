@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:revolutionary_solitaire/ui/mainScreen.dart';
 import 'ui/Deck.dart';
+import 'ui/mainScreen.dart';
+
 
 void main() => runApp(SolitareApp());
 
@@ -21,7 +24,12 @@ class SolitareApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GameBoard(title: '27 Red And Black'),
+      initialRoute: '/',
+      routes: {
+        '/'  : (context) => MainScreen(),
+        '/deck' : (context) => GameBoard(title: '27 Red And Black'),
+      },
+
     );
   }
 }

@@ -16,7 +16,6 @@ class PlayingCard {
   bool selected;
 
 
-
   PlayingCard({
     @required this.cardSuit,
     this.cardNumber,

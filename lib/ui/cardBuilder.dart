@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:revolutionary_solitaire/data/data.dart';
 import 'package:revolutionary_solitaire/model/playing_card.dart';
-
+import 'package:revolutionary_solitaire/data/size_config.dart';
 
 class CardBuilder extends StatefulWidget {
 
@@ -17,6 +17,7 @@ class CardBuilder extends StatefulWidget {
 }
 
 class _cardBuilder extends State<CardBuilder>{
+
   int position ;
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _cardBuilder extends State<CardBuilder>{
 
   @override
   Widget build(BuildContext context) {
+
     // TODO: implement build
     return InkWell(
       onTap: (){
@@ -123,8 +125,8 @@ class _cardBuilder extends State<CardBuilder>{
         alignment: Alignment.center,
         children: <Widget>[
           Container(
-            width: 103,
-            height:  143,
+            width: SizeConfig.blockSizeHorizontal *13,
+            height:  SizeConfig.blockSizeVertical *37,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.lightBlue,
@@ -143,24 +145,24 @@ class _cardBuilder extends State<CardBuilder>{
           ),
 
           Container(
-              width: 100,
-              height:  140,
+              width: SizeConfig.blockSizeHorizontal *12.5,
+              height:  SizeConfig.blockSizeVertical *36.7,
               child: Image.asset("assets/"+ _cardSuitToString() +"_"+ widget.playingCard.cardNumber.toString() + ".png",)),
 
           ClipRRect(
               borderRadius: BorderRadius.all(
                 Radius.circular(8.0),
               ),child: Container(
-            width: 100,
-            height:  140,
+            width: SizeConfig.blockSizeHorizontal *12.5,
+            height:  SizeConfig.blockSizeVertical *36.7,
             color: Colors.lightBlueAccent.withOpacity(0.2),)
           ),
         ],
       );
     }
     return Container(
-      width: 100,
-      height:  140,
+      width: SizeConfig.blockSizeHorizontal *13,
+      height:  SizeConfig.blockSizeVertical *37,
       child:Image.asset("assets/"+_cardSuitToString()+"_"+ widget.playingCard.cardNumber.toString() + ".png",),
     );
   }

@@ -13,7 +13,7 @@ class ShadowText extends StatelessWidget {
         children: [
            new Text(
               data,
-              style: style.copyWith(color: Colors.orange.withOpacity(0.5)),
+              style: style.copyWith(color: Colors.orange.withOpacity(0.9)),
             ),
 
           new BackdropFilter(
