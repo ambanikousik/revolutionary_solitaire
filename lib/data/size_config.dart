@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:revolutionary_solitaire/data/data.dart';
 
 class SizeConfig {
   static MediaQueryData _mediaQueryData;
@@ -13,5 +14,7 @@ class SizeConfig {
     screenHeight = _mediaQueryData.size.height;
     blockSizeHorizontal = screenWidth / 100;
     blockSizeVertical = screenHeight / 100;
+    height = blockSizeVertical;
+    width = blockSizeHorizontal;
   }
 }

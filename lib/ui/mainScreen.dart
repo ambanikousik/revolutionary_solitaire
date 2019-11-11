@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:revolutionary_solitaire/data/data.dart';
 import 'package:revolutionary_solitaire/data/size_config.dart';
+
 import 'help.dart';
 class MainScreen extends StatelessWidget{
   @override
@@ -15,12 +17,14 @@ class MainScreen extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
          children: <Widget>[
            Container(
-             height:  SizeConfig.blockSizeVertical *45,
+             height:  height *25,
              child:Image.asset("assets/cardgame.png",),
            ),
+           SizedBox(height: height*20,),
+
            FlatButton(
              child: Container(
-               height:  SizeConfig.blockSizeVertical *15,
+               height:  height *10,
                child: Image.asset("assets/playbutton.png",),
              ),
             onPressed:() {
@@ -28,9 +32,10 @@ class MainScreen extends StatelessWidget{
              }
              ,
            ),
+           SizedBox(height: height*2,),
            FlatButton(
              child: Container(
-               height:  SizeConfig.blockSizeVertical *10,
+               height: height*10,
                child: Image.asset("assets/helpbutton.png",),
              ),
              onPressed:() {

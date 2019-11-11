@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:revolutionary_solitaire/data/size_config.dart';
+import 'package:revolutionary_solitaire/data/data.dart';
+import 'package:revolutionary_solitaire/data/data.dart' as prefix0;
 
 class CustomDialog extends StatelessWidget {
   final String title, description, buttonText;
@@ -14,7 +15,7 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -30,7 +31,7 @@ class CustomDialog extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          width: SizeConfig.blockSizeVertical *120,
+         // width: height *70,
           padding: EdgeInsets.only(
             top:  Consts.padding,
             //bottom: Consts.padding,
@@ -60,7 +61,7 @@ class CustomDialog extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: SizeConfig.blockSizeHorizontal *2,
+                      fontSize: width *4,
                     ),
                   ),
                 ),
@@ -82,11 +83,11 @@ class CustomDialog extends StatelessWidget {
           left: Consts.padding,
           right: Consts.padding,
           child: Container(
-            height: SizeConfig.blockSizeHorizontal *6,
+            height: height *6,
             alignment: Alignment.center,
             child: Text(title,style: TextStyle(
               color: Colors.white,
-              fontSize: SizeConfig.blockSizeHorizontal *3
+              fontSize:width *7
             ),),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),

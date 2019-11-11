@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revolutionary_solitaire/data/data.dart';
 import 'package:revolutionary_solitaire/model/playing_card.dart';
-import 'package:revolutionary_solitaire/data/size_config.dart';
 
 class CardBuilder extends StatefulWidget {
 
@@ -32,7 +31,9 @@ class _cardBuilder extends State<CardBuilder>{
     // TODO: implement build
     return InkWell(
       onTap: (){
-        _gameHandle();
+        if(widget.playingCard.cardNumber<15){
+          _gameHandle();
+        }
       },
       child: _card(widget.playingCard.selected),
     );
@@ -68,11 +69,10 @@ class _cardBuilder extends State<CardBuilder>{
             print("point: "+selectedPoint.toString());
 
             if(selectedPos.length==4 && passed){
-              roundNumber++;
-              print(roundNumber);
-              List round = shuffle(rounds[roundNumber]);
               for(int i=0;i<selectedPos.length;i++){
-                deck[selectedPos[i]] = round[i];
+                collectedCards.add(deck[selectedPos[i]]);
+                deck[selectedPos[i]] = nullCard;
+                emptyPos.add(selectedPos[i]);
                 print("pos"+selectedPos[i].toString());
               }
 
@@ -125,8 +125,8 @@ class _cardBuilder extends State<CardBuilder>{
         alignment: Alignment.center,
         children: <Widget>[
           Container(
-            width: SizeConfig.blockSizeHorizontal *13,
-            height:  SizeConfig.blockSizeVertical *37,
+            width: cardWidth,
+            height:  cardHeight,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.lightBlue,
@@ -145,24 +145,24 @@ class _cardBuilder extends State<CardBuilder>{
           ),
 
           Container(
-              width: SizeConfig.blockSizeHorizontal *12.5,
-              height:  SizeConfig.blockSizeVertical *36.7,
+              width: selectedCardWidth,
+              height:  selectedCardHeight,
               child: Image.asset("assets/"+ _cardSuitToString() +"_"+ widget.playingCard.cardNumber.toString() + ".png",)),
 
           ClipRRect(
               borderRadius: BorderRadius.all(
                 Radius.circular(8.0),
               ),child: Container(
-            width: SizeConfig.blockSizeHorizontal *12.5,
-            height:  SizeConfig.blockSizeVertical *36.7,
+            width: selectedCardWidth,
+            height:  selectedCardHeight,
             color: Colors.lightBlueAccent.withOpacity(0.2),)
           ),
         ],
       );
     }
     return Container(
-      width: SizeConfig.blockSizeHorizontal *13,
-      height:  SizeConfig.blockSizeVertical *37,
+      width: cardWidth,
+      height:  cardHeight,
       child:Image.asset("assets/"+_cardSuitToString()+"_"+ widget.playingCard.cardNumber.toString() + ".png",),
     );
   }

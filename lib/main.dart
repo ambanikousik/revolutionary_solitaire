@@ -4,7 +4,6 @@ import 'package:revolutionary_solitaire/ui/mainScreen.dart';
 import 'ui/Deck.dart';
 import 'ui/mainScreen.dart';
 
-
 void main() => runApp(SolitareApp());
 
 class SolitareApp extends StatelessWidget {
@@ -15,8 +14,8 @@ class SolitareApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
     ]);
     SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
