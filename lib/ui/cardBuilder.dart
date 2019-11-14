@@ -39,16 +39,18 @@ class _cardBuilder extends State<CardBuilder>{
     );
   }
 
+
+
   void _gameHandle(){
       setState(() {
         if (!widget.playingCard.selected) {
-          print("tapped");
-          if(selectedPos.length<4 && roundNumber<=11) {
             selectedPos.add(widget.playingCard.cellIndex);
-            print("added:"+position.toString());
+            print("added:"+widget.playingCard.cardNumber.toString());
             widget.playingCard.selected = true;
             bool passed=false;
             selectedPoint =0;
+
+
             selectedPos.forEach((pos){
               if(deck[pos].cardNumber<=10){
                 selectedPoint=selectedPoint+deck[pos].cardNumber;
@@ -61,14 +63,14 @@ class _cardBuilder extends State<CardBuilder>{
                   numbers.add(deck[pos].cardNumber);
                   suits.add(deck[pos].cardSuit);
                 });
-                if(_checkUnique(numbers) && _checkUnique(suits)){
+                if(_checkUnique(numbers) && _checkUnique(suits) && selectedPos.length==4){
                    passed = true;
                 }
               }
             });
             print("point: "+selectedPoint.toString());
 
-            if(selectedPos.length==4 && passed){
+            if(passed){
               for(int i=0;i<selectedPos.length;i++){
                 collectedCards.add(deck[selectedPos[i]]);
                 deck[selectedPos[i]] = nullCard;
@@ -83,7 +85,7 @@ class _cardBuilder extends State<CardBuilder>{
               widget.onValueChanged(deck);
             }
 
-          }
+
         }
         else{
           print("removed:"+position.toString());
@@ -92,6 +94,11 @@ class _cardBuilder extends State<CardBuilder>{
         }
       });
     }
+
+
+
+
+
   String _cardSuitToString() {
     switch (widget.playingCard.cardSuit) {
       case CardSuit.Hearts:
