@@ -1,5 +1,6 @@
 import 'package:revolutionary_solitaire/model/playing_card.dart';
 import 'dart:math';
+import 'dart:io' show Platform;
 
 int roundNumber=0;
 int selectedPoint;
@@ -29,7 +30,7 @@ List<PlayingCard> initRound = [];
 PlayingCard nullCard =   PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber:15 );
 
 
-       List<PlayingCard> initRoundx = [
+List<PlayingCard> initRoundx = [
   PlayingCard(cardSuit:CardSuit.Spades,cardNumber: 10 ),
   PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 5 ),
   PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 5 ),
@@ -48,7 +49,7 @@ PlayingCard nullCard =   PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber:15 );
   PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 2),
 ];
 
- List<PlayingCard> inGameReservex =  [
+List<PlayingCard> inGameReservex =  [
   PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 13),
   PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 7),
   PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 8),
@@ -89,7 +90,14 @@ PlayingCard nullCard =   PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber:15 );
 
 
 
-
+String getBannerAdUnitId() {
+  if (Platform.isIOS) {
+    return 'ca-app-pub-3940256099942544/2934735716';
+  } else if (Platform.isAndroid) {
+    return 'ca-app-pub-3940256099942544/6300978111';
+  }
+  return null;
+}
 
 List shuffle(List items) {
   var random = new Random();

@@ -4,14 +4,14 @@ import 'package:revolutionary_solitaire/model/playing_card.dart';
 
 class CardBuilder extends StatefulWidget {
 
-   final PlayingCard playingCard;
-   final void Function(List) onValueChanged;
+  final PlayingCard playingCard;
+  final void Function(List) onValueChanged;
 
-   CardBuilder({
-     @required this.playingCard,
-     @required this.onValueChanged,
+  CardBuilder({
+    @required this.playingCard,
+    @required this.onValueChanged,
 
-   });
+  });
   createState() => _cardBuilder();
 }
 
@@ -42,62 +42,118 @@ class _cardBuilder extends State<CardBuilder>{
 
 
   void _gameHandle(){
-      setState(() {
-        if (!widget.playingCard.selected) {
-            selectedPos.add(widget.playingCard.cellIndex);
-            print("added:"+widget.playingCard.cardNumber.toString());
-            widget.playingCard.selected = true;
-            bool passed=false;
-            selectedPoint =0;
+    bool passed=false;
+    setState(() {
+      if (!widget.playingCard.selected) {
+        selectedPos.add(widget.playingCard.cellIndex);
+        //   print("added:"+widget.playingCard.cardNumber.toString());
+        widget.playingCard.selected = true;
+
+        print(_cardColor());
 
 
-            selectedPos.forEach((pos){
-              if(deck[pos].cardNumber<=10){
-                selectedPoint=selectedPoint+deck[pos].cardNumber;
-                selectedPoint==27?passed=true:passed=false;
-              }
-              else{
-                List numbers=[];
-                List suits=[];
-                selectedPos.forEach((pos){
-                  numbers.add(deck[pos].cardNumber);
-                  suits.add(deck[pos].cardSuit);
-                });
-                if(_checkUnique(numbers) && _checkUnique(suits) && selectedPos.length==4){
-                   passed = true;
-                }
-              }
-            });
-            print("point: "+selectedPoint.toString());
 
-            if(passed){
-              for(int i=0;i<selectedPos.length;i++){
-                collectedCards.add(deck[selectedPos[i]]);
-                deck[selectedPos[i]] = nullCard;
-                emptyPos.add(selectedPos[i]);
-                print("pos"+selectedPos[i].toString());
-              }
+        passed = _checkPassed();
+        //  print("point: "+selectedPoint.toString());
+        if(passed){
+          for(int i=0;i<selectedPos.length;i++){
+            collectedCards.add(deck[selectedPos[i]]);
+            deck[selectedPos[i]] = nullCard;
+            emptyPos.add(selectedPos[i]);
+            //     print("pos"+selectedPos[i].toString());
+          }
 
-              for(int i=0;i<deck.length;i++){
-                deck[i].cellIndex = i;
-              }
-              selectedPos = [];
-              widget.onValueChanged(deck);
-            }
-
-
+          for(int i=0;i<deck.length;i++){
+            deck[i].cellIndex = i;
+          }
+          selectedPos = [];
+          widget.onValueChanged(deck);
         }
-        else{
-          print("removed:"+position.toString());
-          selectedPos.removeWhere((item)=>item == position);
-          widget.playingCard.selected = false;
+
+
+      }
+      else{
+        //   print("removed:"+position.toString());
+        selectedPos.removeWhere((item)=>item == position);
+        widget.playingCard.selected = false;
+
+        passed = _checkPassed();
+        //  print("point: "+selectedPoint.toString());
+        if(passed){
+          for(int i=0;i<selectedPos.length;i++){
+            collectedCards.add(deck[selectedPos[i]]);
+            deck[selectedPos[i]] = nullCard;
+            emptyPos.add(selectedPos[i]);
+            //   print("pos"+selectedPos[i].toString());
+          }
+
+          for(int i=0;i<deck.length;i++){
+            deck[i].cellIndex = i;
+          }
+          selectedPos = [];
+          widget.onValueChanged(deck);
         }
-      });
+      }
+    });
+  }
+
+
+  bool _checkPassed(){
+    selectedPoint =0;
+    bool passed=false;
+    for(final pos in selectedPos){
+      if(deck[pos].cardNumber<=10){
+        selectedPoint=selectedPoint+deck[pos].cardNumber;
+        List colors=[];
+        selectedPos.forEach((pos){
+          colors.add(deck[pos].color);
+        });
+
+
+        selectedPoint==27 && _sameColor(colors)? passed=true:passed=false;
+
+        //  print(passed);
+      }
+      else{
+        passed=false;
+        break;
+      }
     }
+    for(final pos in selectedPos){
+      if(deck[pos].cardNumber>10){
+        List numbers=[];
+        List suits=[];
+        selectedPos.forEach((pos){
+          numbers.add(deck[pos].cardNumber);
+          suits.add(deck[pos].cardSuit);
+        });
+        if(_checkUnique(numbers) && _checkUnique(suits) && selectedPos.length==4){
+          passed = true;
+        }
+      }
+      else{
+        break;
+      }
+    }
+    return passed;
+  }
+  bool _sameColor(List c){
+    bool same = false;
+    c.forEach((color){
+      color == c[0]? same = true: same = false;
+    });
+    print("same: "+same.toString());
+    return same;
+  }
 
-
-
-
+  String _cardColor(){
+    switch (widget.playingCard.color) {
+      case CardColor.Red:
+        return "red";
+      case CardColor.Black:
+        return "black";
+    }
+  }
 
   String _cardSuitToString() {
     switch (widget.playingCard.cardSuit) {
@@ -117,11 +173,12 @@ class _cardBuilder extends State<CardBuilder>{
     var length = a.length;
     var set = new Set();
     for(var i = 0; i < length; i++) {
-      //statistics++;
       if(!set.add(a[i])) {
+        //    print("similar");
         return false;
       }
     }
+    //   print("unique");
     return true;
   }
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:revolutionary_solitaire/data/data.dart' as prefix0;
 import 'package:revolutionary_solitaire/model/playing_card.dart';
 import 'package:revolutionary_solitaire/data/data.dart';
 import 'card_cell.dart';
 import 'ShadowText.dart';
 import 'package:revolutionary_solitaire/data/size_config.dart';
+import 'package:admob_flutter/admob_flutter.dart';
+
 
 class GameBoard extends StatefulWidget {
   GameBoard({Key key, this.title}) : super(key: key);
@@ -29,13 +32,13 @@ class _GameBoardState extends State<GameBoard> {
 
 
   void onValueChanged(List newList) {
-  setState(() {
-    score=collectedCards.length;
-    reserved = inGameReserve.length;
-    print(reserved);
-    _deck = newList;
-  });
-}
+    setState(() {
+      score=collectedCards.length;
+      reserved = inGameReserve.length;
+      print(reserved);
+      _deck = newList;
+    });
+  }
   void onInit(List newList) {
     setState(() {
       score=0;
@@ -45,7 +48,7 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   Widget _cardSet(){
-  return  Container(
+    return  Container(
       width: cardSetWidth,
       height: cardSetHeight,
       decoration: BoxDecoration(
@@ -97,9 +100,9 @@ class _GameBoardState extends State<GameBoard> {
           ),
         ],
         // This trailing comma makes auto-formatting nicer for build methods.
-        ),
+      ),
 
-  );
+    );
   }
 
   @override
@@ -108,115 +111,137 @@ class _GameBoardState extends State<GameBoard> {
       backgroundColor: Color(0xFF333366),
       body:Container(
         alignment: Alignment.center,
-            child: Column(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: height*1.5,),
+            ShadowText('27 Red & Black',
+              style:TextStyle(fontSize:width *13,
+                  color: Colors.redAccent,
+                  fontStyle:FontStyle.italic),
+            ),
+            SizedBox(height:height *1,),
+            Row(
               children: <Widget>[
-                SizedBox(height:height *2,),
-
-                ShadowText('27 Red & Black',
-                        style:TextStyle(fontSize:width *13,
-                            color: Colors.redAccent,
-                            fontStyle:FontStyle.italic),
-                      ),
-                SizedBox(height:height *5,),
-                Row(
-                  children: <Widget>[
-                    SizedBox(width:width *2,),
-                    RichText(
-                      text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(text: 'Reserved: ', style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.w300, fontSize:SizeConfig.blockSizeHorizontal *5.5),),
-                            TextSpan(text: reserved.toString(), style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.w500, fontSize:SizeConfig.blockSizeHorizontal *5.5),),
-                          ]
-                      ),
-                    ),
-                    SizedBox(width:width *7),
-
-                    InkWell(
-                   onTap: (){
-                     _unfoldCard();
-                   },
-                   child: Container(
-                     alignment: Alignment.center,
-                     height: height*4,
-                     width: width*20,
-                     child: Text('Unfold',style: TextStyle(fontSize: height*3),),
-                     decoration: BoxDecoration(
-                         color: Colors.redAccent.withOpacity(0.6),
-                         borderRadius: BorderRadius.all(Radius.circular(5))
-                     ),
-                   ),
-                 ),
-
-                  ],
+                SizedBox(width:width *2,),
+                RichText(
+                  text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(text: 'Reserved: ', style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.w300, fontSize:SizeConfig.blockSizeHorizontal *5.5),),
+                        TextSpan(text: reserved.toString(), style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.w500, fontSize:SizeConfig.blockSizeHorizontal *5.5),),
+                      ]
+                  ),
                 ),
-                SizedBox(height:height *1,),
-                _cardSet(),
+                SizedBox(width:width *7),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Column(children: <Widget>[
-                      FlatButton(
-                        child: Container(
-                          width: width* 20,
-                          child: Image.asset("assets/restartbutton.png",),
-                        ),
-                        onPressed:() {
-                          _initialiseGame();
-                        }
-                        ,
-                      ),
-                      FlatButton(
-                        child: Container(
-                          width: width* 24,
-                          child: Image.asset("assets/menubutton.png",),
-                        ),
-                        onPressed:() {
-                          Navigator.pushReplacementNamed(context, '/');                        }
-                        ,
-                      ),
-                    ],),
-                    Container(
-                      alignment: Alignment.center,
-                      height: height*7,
-                      width: width *40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        border: Border.all(
-                          color: Colors.lightBlueAccent,
-                          width: 2,
-                        ),
-                      ),
-                      child: RichText(
-                        text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(text: 'Collected: ', style: TextStyle(color:Colors.white, fontSize:SizeConfig.blockSizeHorizontal *6),),
-                              TextSpan(text: score.toString(), style: TextStyle(color: Colors.lightGreen,fontWeight: FontWeight.w700, fontSize:SizeConfig.blockSizeHorizontal *6.5),),
-                            ]
-                        ),
-                      ),
-
+                InkWell(
+                  onTap: (){
+                    _unfoldCard();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: height*4,
+                    width: width*20,
+                    child: Text('Unfold',style: TextStyle(fontSize: height*3),),
+                    decoration: BoxDecoration(
+                        color: Colors.redAccent.withOpacity(0.6),
+                        borderRadius: BorderRadius.all(Radius.circular(5))
                     ),
-                    SizedBox(width:width *3,),
-                  ],
+                  ),
                 ),
 
               ],
-            ), // This trailing comma makes auto-formatting nicer for build methods.
-    ),
+            ),
+            SizedBox(height:height *0.5,),
+            _cardSet(),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FlatButton(
+                  child: Container(
+                    width: width* 20,
+                    child: Image.asset("assets/restartbutton.png",),
+                  ),
+                  onPressed:() {
+                    _initialiseGame();
+                  }
+                  ,
+                ),
+                FlatButton(
+                  child: Container(
+                    width: width* 24,
+                    child: Image.asset("assets/menubutton.png",),
+                  ),
+                  onPressed:() {
+                    Navigator.pushReplacementNamed(context, '/');                        }
+                  ,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  height: height*6,
+                  width: width *35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    border: Border.all(
+                      color: Colors.lightBlueAccent,
+                      width: 2,
+                    ),
+                  ),
+                  child: RichText(
+                    text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(text: 'Collected: ', style: TextStyle(color:Colors.white, fontSize:SizeConfig.blockSizeHorizontal *5.5),),
+                          TextSpan(text: score.toString(), style: TextStyle(color: Colors.lightGreen,fontWeight: FontWeight.w700, fontSize:SizeConfig.blockSizeHorizontal *6),),
+                        ]
+                    ),
+                  ),
+
+                ),
+                SizedBox(width:width *1,),
+              ],
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: AdmobBanner(
+                  adUnitId: getBannerAdUnitId(),
+                  adSize: AdmobBannerSize.BANNER,
+                ),
+              ),
+            ),
+          ],
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 
   //initialise a new game
   void _initialiseGame(){
     inGameReserve = [];
-    initRound = initRoundx;
     emptyPos = [];
     deck = [];
     collectedCards = [];
     selectedPoint=0;
     selectedPos = [];
+    print(height);
+    print(width);
     inGameReserve =[
+      PlayingCard(cardSuit:CardSuit.Spades,cardNumber: 10 ),
+      PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 5 ),
+      PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 5 ),
+      PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber:7),
+      PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 4),
+      PlayingCard(cardSuit:CardSuit.Spades,cardNumber: 6),
+      PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 9),
+      PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber: 12),
+      PlayingCard(cardSuit:CardSuit.Spades,cardNumber: 14),
+      PlayingCard(cardSuit:CardSuit.Spades,cardNumber: 5),
+      PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber: 3),
+      PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 8),
+      PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 11),
+      PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 9),
+      PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 10),
+      PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 2),
       PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 13),
       PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 7),
       PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 8),
@@ -254,48 +279,79 @@ class _GameBoardState extends State<GameBoard> {
       PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 3),
       PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 3),
     ];
-    List round = shuffle(initRound);
-  for(int i=0;i<round.length;i++){
-      PlayingCard card = round[i];
-      deck.add(
-        card
-          ..cellIndex=i
-            ..selected =false
-      );
-  }
-    onInit(deck);
-    print(reserved);
-    print(inGameReserve.length.toString()+"current");
-    print(inGameReservex.length);
-
-  }
-   void _unfoldCard(){
-  int empty = emptyPos.length;
-  int reserve = inGameReserve.length;
-  if(empty !=0 && reserve !=0){
     List round = shuffle(inGameReserve);
-    if(reserve>=empty){
-      for(int i=0;i<empty;i++){
-        deck[emptyPos[i]] = round[i];
-        round.removeAt(i);
+    print(round.length);
+
+
+    for(int i=0;i<16;i++){
+      PlayingCard card = round[i];
+      if(card.cardSuit == CardSuit.Hearts || card.cardSuit == CardSuit.Diamonds){
+        deck.add(
+            card
+              ..cellIndex=i
+              ..selected =false
+              ..color=CardColor.Red
+        );
+
+        //print("red ");
       }
-      emptyPos = [];
-    }
-    else{
-      for(int i=0;i<reserve;i++){
-        deck[emptyPos[i]] = round[i];
-        round.removeAt(i);
+      else{
+        deck.add(
+            card
+              ..cellIndex=i
+              ..selected =false
+              ..color=CardColor.Black
+        );
       }
+      round.removeAt(i);
     }
 
     for(int i=0;i<deck.length;i++){
       deck[i].cellIndex = i;
     }
-    onValueChanged(deck);
-    print('unfold');
+    onInit(deck);
+    print(reserved);
+    print(inGameReserve.length.toString()+" current");
+    // print(inGameReservex.length);
+
   }
-  else{
-    print(emptyPos.length.toString()+" "+inGameReserve.length.toString());
+  void _unfoldCard(){
+    int empty = emptyPos.length;
+    int reserve = inGameReserve.length;
+    if(empty !=0 && reserve !=0){
+      List round = shuffle(inGameReserve);
+      round.forEach((card){
+        if(card.cardSuit == CardSuit.Hearts || card.cardSuit == CardSuit.Diamonds){
+          card.color = CardColor.Red;
+        }
+        else{
+          card.color = CardColor.Black;
+        }
+      });
+
+
+      if(reserve>=empty){
+        for(int i=0;i<empty;i++){
+          deck[emptyPos[i]] = round[i];
+          round.removeAt(i);
+        }
+        emptyPos = [];
+      }
+      else{
+        for(int i=0;i<reserve;i++){
+          deck[emptyPos[i]] = round[i];
+          round.removeAt(i);
+        }
+      }
+
+      for(int i=0;i<deck.length;i++){
+        deck[i].cellIndex = i;
+      }
+      onValueChanged(deck);
+      print('unfold');
+    }
+    else{
+      print(emptyPos.length.toString()+" "+inGameReserve.length.toString());
+    }
   }
-}
 }
