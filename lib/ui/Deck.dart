@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:revolutionary_solitaire/data/data.dart' as prefix0;
 import 'package:revolutionary_solitaire/model/playing_card.dart';
 import 'package:revolutionary_solitaire/data/data.dart';
 import 'card_cell.dart';
@@ -18,7 +17,6 @@ class GameBoard extends StatefulWidget {
 class _GameBoardState extends State<GameBoard> {
   List _deck = [];
   int reserved,score;
-  List<PlayingCard> inGameReserve;
 
   @override
   void initState() {
@@ -173,7 +171,8 @@ class _GameBoardState extends State<GameBoard> {
                     child: Image.asset("assets/menubutton.png",),
                   ),
                   onPressed:() {
-                    Navigator.pushReplacementNamed(context, '/');                        }
+                    Navigator.pushReplacementNamed(context, '/');
+                    }
                   ,
                 ),
                 Container(
@@ -244,7 +243,7 @@ class _GameBoardState extends State<GameBoard> {
       PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 2),
       PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 13),
       PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 7),
-      PlayingCard(cardSuit:CardSuit.Hearts,cardNumber: 8),
+      PlayingCard(cardSuit:CardSuit.Spades,cardNumber: 8),
       PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber: 9),
       PlayingCard(cardSuit:CardSuit.Clubs,cardNumber: 10),
       PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber: 13),
@@ -312,7 +311,6 @@ class _GameBoardState extends State<GameBoard> {
     onInit(deck);
     print(reserved);
     print(inGameReserve.length.toString()+" current");
-    // print(inGameReservex.length);
 
   }
   void _unfoldCard(){

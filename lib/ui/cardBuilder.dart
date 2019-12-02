@@ -39,63 +39,93 @@ class _cardBuilder extends State<CardBuilder>{
     );
   }
 
-
-
   void _gameHandle(){
     bool passed=false;
+    int emptySpaces=0;
     setState(() {
+//      if (!widget.playingCard.selected) {
+//        selectedPos.add(widget.playingCard.cellIndex);
+//        widget.playingCard.selected = true;
+//
+//        passed = _checkPassed();
+//        if(passed){
+//          for(int i=0;i<selectedPos.length;i++){
+//            collectedCards.add(deck[selectedPos[i]]);
+//            deck[selectedPos[i]] = nullCard;
+//            emptyPos.add(selectedPos[i]);
+//          }
+//
+//          for(int i=0;i<deck.length;i++){
+//            deck[i].cellIndex = i;
+//            if(deck[i]==nullCard){
+//              emptySpaces++;
+//            }
+//          }
+//          print("empty " + emptySpaces.toString());
+//          print("reserve "+inGameReserve.length.toString());
+//          selectedPos = [];
+//          widget.onValueChanged(deck);
+//        }
+//
+//
+//      }
+//      else{
+//        selectedPos.removeWhere((item)=>item == position);
+//        widget.playingCard.selected = false;
+//
+//        passed = _checkPassed();
+//        if(passed){
+//          for(int i=0;i<selectedPos.length;i++){
+//            collectedCards.add(deck[selectedPos[i]]);
+//            deck[selectedPos[i]] = nullCard;
+//            emptyPos.add(selectedPos[i]);
+//          }
+//
+//          for(int i=0;i<deck.length;i++){
+//            deck[i].cellIndex = i;
+//            if(deck[i]==nullCard){
+//              emptySpaces++;
+//            }
+//          }
+//          print("empty " + emptySpaces.toString());
+//          print("reserve "+inGameReserve.length.toString());
+//          selectedPos = [];
+//          widget.onValueChanged(deck);
+//        }
+//      }
       if (!widget.playingCard.selected) {
         selectedPos.add(widget.playingCard.cellIndex);
-        //   print("added:"+widget.playingCard.cardNumber.toString());
-        widget.playingCard.selected = true;
-
-        print(_cardColor());
-
-
-
-        passed = _checkPassed();
-        //  print("point: "+selectedPoint.toString());
-        if(passed){
-          for(int i=0;i<selectedPos.length;i++){
-            collectedCards.add(deck[selectedPos[i]]);
-            deck[selectedPos[i]] = nullCard;
-            emptyPos.add(selectedPos[i]);
-            //     print("pos"+selectedPos[i].toString());
-          }
-
-          for(int i=0;i<deck.length;i++){
-            deck[i].cellIndex = i;
-          }
-          selectedPos = [];
-          widget.onValueChanged(deck);
-        }
-
-
-      }
+        widget.playingCard.selected = true;}
       else{
-        //   print("removed:"+position.toString());
         selectedPos.removeWhere((item)=>item == position);
-        widget.playingCard.selected = false;
-
-        passed = _checkPassed();
-        //  print("point: "+selectedPoint.toString());
+       widget.playingCard.selected = false;
+      }
+              passed = _checkPassed();
         if(passed){
           for(int i=0;i<selectedPos.length;i++){
             collectedCards.add(deck[selectedPos[i]]);
             deck[selectedPos[i]] = nullCard;
             emptyPos.add(selectedPos[i]);
-            //   print("pos"+selectedPos[i].toString());
           }
 
           for(int i=0;i<deck.length;i++){
             deck[i].cellIndex = i;
+            if(deck[i]==nullCard){
+              emptySpaces++;
+            }
+          }
+          print("empty " + emptySpaces.toString());
+          print("reserve "+inGameReserve.length.toString());
+          if(emptySpaces == 16 && inGameReserve.length ==0){
+            Navigator.pushReplacementNamed(context, '/');
           }
           selectedPos = [];
           widget.onValueChanged(deck);
         }
-      }
+
     });
   }
+
 
 
   bool _checkPassed(){
@@ -112,7 +142,6 @@ class _cardBuilder extends State<CardBuilder>{
 
         selectedPoint==27 && _sameColor(colors)? passed=true:passed=false;
 
-        //  print(passed);
       }
       else{
         passed=false;
@@ -142,18 +171,9 @@ class _cardBuilder extends State<CardBuilder>{
     c.forEach((color){
       color == c[0]? same = true: same = false;
     });
-    print("same: "+same.toString());
     return same;
   }
 
-  String _cardColor(){
-    switch (widget.playingCard.color) {
-      case CardColor.Red:
-        return "red";
-      case CardColor.Black:
-        return "black";
-    }
-  }
 
   String _cardSuitToString() {
     switch (widget.playingCard.cardSuit) {
@@ -174,11 +194,9 @@ class _cardBuilder extends State<CardBuilder>{
     var set = new Set();
     for(var i = 0; i < length; i++) {
       if(!set.add(a[i])) {
-        //    print("similar");
         return false;
       }
     }
-    //   print("unique");
     return true;
   }
 
@@ -196,13 +214,11 @@ class _cardBuilder extends State<CardBuilder>{
                 color: Colors.lightBlue,
                 width: 1,
               ),
-              //color: Colors.redAccent.withOpacity(0.6),
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
               boxShadow: <BoxShadow>[
                 BoxShadow(
                   color: Colors.blue,
                   blurRadius: 10.0,
-                  //offset: new Offset(2.0, 2.0,),
                 ),
               ],
             ),
