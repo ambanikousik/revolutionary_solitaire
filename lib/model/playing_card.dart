@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
 enum CardSuit {
-  Spades,
-  Hearts,
-  Diamonds,
-  Clubs,
+  spades,
+  hearts,
+  diamonds,
+  clubs,
 }
 
-
-enum CardColor{
-  Red,
-  Black,
+enum CardColor {
+  red,
+  black,
 }
 
-List<int> CardNumer = [2,3,4,5,6,7,8,9,10,11,12,13,14];
+List<int> cardNumer = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 class PlayingCard {
   int cardNumber;
@@ -22,14 +21,10 @@ class PlayingCard {
   bool selected;
   CardColor color;
 
-
   PlayingCard({
     @required this.cardSuit,
     this.cardNumber,
     this.selected = false,
     this.color,
-  }
-      );
-
-
+  });
 }

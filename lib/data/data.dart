@@ -1,21 +1,20 @@
-import 'package:revolutionary_solitaire/model/playing_card.dart';
-import 'dart:math';
 import 'dart:io' show Platform;
+import 'dart:math';
 
-int roundNumber=0;
+import 'package:revolutionary_solitaire/model/playing_card.dart';
+
+int roundNumber = 0;
 int selectedPoint;
 int collected = 0;
 double height;
 double width;
 
-
-double cardHeight = height *15;
-double cardWidth = width *22;
-double selectedCardHeight = height *13.7;
-double selectedCardWidth = width *19.5;
-double cardSetHeight = height *65;
-double cardSetWidth = width*97;
-
+double cardHeight = height * 15;
+double cardWidth = width * 22;
+double selectedCardHeight = height * 13.7;
+double selectedCardWidth = width * 19.5;
+double cardSetHeight = height * 65;
+double cardSetWidth = width * 97;
 
 List<PlayingCard> deck = [];
 List<PlayingCard> collectedCards = [];
@@ -26,12 +25,7 @@ List<int> availableLetters = [];
 List<PlayingCard> initRound = [];
 List<PlayingCard> inGameReserve;
 
-
-PlayingCard nullCard =   PlayingCard(cardSuit:CardSuit.Diamonds,cardNumber:15 );
-
-
-
-
+PlayingCard nullCard = PlayingCard(cardSuit: CardSuit.diamonds, cardNumber: 15);
 
 String getBannerAdUnitId() {
   if (Platform.isIOS) {
@@ -42,16 +36,15 @@ String getBannerAdUnitId() {
   return null;
 }
 
-List shuffle(List items) {
-  var random = new Random();
+List<PlayingCard> shuffle(List<PlayingCard> items) {
+  final Random random = Random();
 
   // Go through all elements.
   for (var i = items.length - 1; i > 0; i--) {
-
     // Pick a pseudorandom number according to the list length
-    var n = random.nextInt(i + 1);
+    final int n = random.nextInt(i + 1);
 
-    var temp = items[i];
+    final PlayingCard temp = items[i];
     items[i] = items[n];
     items[n] = temp;
   }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:revolutionary_solitaire/data/data.dart';
-import 'package:revolutionary_solitaire/data/data.dart' as prefix0;
 
 class CustomDialog extends StatelessWidget {
   final String title, description, buttonText;
   final Image image;
 
-  CustomDialog({
+  const CustomDialog({
     @required this.title,
     @required this.description,
     @required this.buttonText,
@@ -15,8 +14,6 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Consts.padding),
@@ -27,27 +24,26 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
-  dialogContent(BuildContext context) {
+  Widget dialogContent(BuildContext context) {
     return Stack(
       children: <Widget>[
         Container(
-         // width: height *70,
-          padding: EdgeInsets.only(
-            top:  Consts.padding,
+          // width: height *70,
+          padding: const EdgeInsets.only(
+            top: Consts.padding,
             //bottom: Consts.padding,
             left: Consts.padding,
             right: Consts.padding,
           ),
-          margin: EdgeInsets.only(top: Consts.avatarRadius),
-          decoration: new BoxDecoration(
+          margin: const EdgeInsets.only(top: Consts.avatarRadius),
+          decoration: BoxDecoration(
             color: Colors.blueGrey,
-            shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(Consts.padding),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 10.0,
-                offset: const Offset(0.0, 10.0),
+                offset: Offset(0.0, 10.0),
               ),
             ],
           ),
@@ -61,15 +57,15 @@ class CustomDialog extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: width *4,
+                      fontSize: width * 4,
                     ),
                   ),
                 ),
               ),
-             // SizedBox(height: 24.0),
+              // SizedBox(height: 24.0),
               Align(
                 alignment: Alignment.bottomRight,
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(); // To close the dialog
                   },
@@ -80,21 +76,20 @@ class CustomDialog extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: Consts.padding,
-          right: Consts.padding,
-          child: Container(
-            height: height *6,
-            alignment: Alignment.center,
-            child: Text(title,style: TextStyle(
-              color: Colors.white,
-              fontSize:width *7
-            ),),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.black54,
-            ),
-          )
-        ),//...top circlular image part,
+            left: Consts.padding,
+            right: Consts.padding,
+            child: Container(
+              height: height * 6,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: Colors.black54,
+              ),
+              child: Text(
+                title,
+                style: TextStyle(color: Colors.white, fontSize: width * 7),
+              ),
+            )), //...top circlular image part,
       ],
     );
   }
